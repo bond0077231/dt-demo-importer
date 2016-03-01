@@ -73,7 +73,7 @@ demos
 
 # Under Development
 * This class only import codestar settings only and planned to support others framework (Like: redux, option tree)
-* Will add ajax loading spinner while import data.
+* Planned to support widget import.
 
 # Credits
 * [Codestar](https://github.com/Codestar/codestar-framework)
