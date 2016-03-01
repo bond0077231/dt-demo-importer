@@ -46,20 +46,24 @@ DT_Demo_Importer::instance( $settings, $options );
 demos
   - demo-1
     - content.xml // WP Exported Data
-    - options.txt // Codestart Exported Opt
+    - options.txt // Codestar Exported Options data
     - screenshot.php // Preview Image
   - demo-2
     - content.xml // WP Exported Data
-    - options.txt // Codestart Exported Opt
+    - options.txt // Codestart Exported Options data
     - screenshot.php // Preview Image
   - demo-3
     - content.xml // WP Exported Data
-    - options.txt // Codestart Exported Opt
+    - options.txt // Codestar Exported Options data
     - screenshot.php // Preview Image
 ````
 
 # Few screenshots
 ![Dashboard](http://i.imgur.com/u8oknuS.jpg)
+
+# Under Development
+* This class only import codestar settings only and planned to support others framework (Like: redux, option tree)
+* Will add ajax loading spinner while import data.
 
 # Credits
 * [Codestar](https://github.com/Codestar/codestar-framework)
