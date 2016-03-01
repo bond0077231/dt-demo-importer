@@ -25,6 +25,21 @@
 .dt-demo-item > .dt-demo-actions {
     padding: 0 10px;
 }
+.dt-demo-item > .dt-demo-actions > .button span {
+    -webkit-background-size: 20px 20px;
+    background-size: 20px 20px;
+    display: inline-block;
+    visibility: visible;
+    float: right;
+    vertical-align: middle;
+    opacity: 1;
+    filter: alpha(opacity=100);
+    width: auto;
+    height: auto;
+    margin: 0;
+    padding-left: 25px;
+    background-position: 0px center
+}
 .dt-demo-item > .dt-demo-screenshot .dt-tag {
     position: absolute;
     top: 5px;

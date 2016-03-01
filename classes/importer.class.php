@@ -83,19 +83,19 @@ class DT_Demo_Importer extends DT_Demo_Importer_Abstract {
     <h2><?php _e( 'Decent Themes Demo Importer', 'dt-importer' ); ?></h2>
     <div class="dt-demo-browser">
       <?php
-        foreach ($this->items as $item ) :
+        foreach ($this->items as $item => $value ) :
           $opt = get_option($this->opt_id);
 
           $imported_class = '';
           $btn_text = '';
           $status = '';
-          if (!empty($opt[$item['id']])) {
+          if (!empty($opt[$item])) {
             $imported_class = 'imported';
             $btn_text .= __( 'Re-Import', 'dt-importer' );
             $status .= __( 'Imported', 'dt-importer' );
           } else {
             $btn_text .= __( 'Import', 'dt-importer' );
-            $status .= __( 'No Imported', 'dt-importer' );
+            $status .= __( 'Not Imported', 'dt-importer' );
           }
       ?>
         <div class="dt-demo-item <?php echo esc_attr($imported_class); ?>" data-dt-importer>
@@ -105,36 +105,58 @@ class DT_Demo_Importer extends DT_Demo_Importer_Abstract {
           </div>
             <?php
               $image_url = '';
-              if (file_exists(DT_IMPORTER_CONTENT_DIR . $item['id'] . '/screenshot.png')) {
-                $image_url = DT_IMPORTER_CONTENT_URI . $item['id'] . '/screenshot.png';
+              if (file_exists(DT_IMPORTER_CONTENT_DIR . $item . '/screenshot.png')) {
+                $image_url = DT_IMPORTER_CONTENT_URI . $item . '/screenshot.png';
               } else {
                 $image_url = DT_IMPORTER_URI . '/assets/img/screenshot.png';
               }
             ?>
-            <img src="<?php echo esc_url( $image_url ); ?>" alt="<?php echo esc_attr($item['title']); ?>">
+            <img src="<?php echo esc_url( $image_url ); ?>" alt="<?php echo esc_attr($value['title']); ?>">
           </div>
-          <h2 class="dt-demo-name"><?php echo esc_attr($item['title']); ?></h2>
+          <h2 class="dt-demo-name"><?php echo esc_attr($value['title']); ?></h2>
           <div class="dt-demo-actions">
-            <a class="button button-secondary" href="#" data-import="<?php echo esc_attr($item['id']); ?>" data-nonce="<?php echo esc_attr( $nonce ); ?>"><?php echo esc_attr($btn_text); ?></a>
-            <a class="button button-primary" target="_blank" href="<?php echo esc_url($item['preview_url']); ?>"><?php _e( 'Preview', 'dt-importer' ); ?></a>
+            <a class="button button-secondary" href="#" data-import="<?php echo esc_attr($item); ?>" data-nonce="<?php echo esc_attr( $nonce ); ?>"><?php echo esc_attr($btn_text); ?></a>
+            <a class="button button-primary" target="_blank" href="<?php echo esc_url($value['preview_url']); ?>"><?php _e( 'Preview', 'dt-importer' ); ?></a>
           </div>
           
           <div class="dt-importer-response"><span class="dismiss" title="Dismis this messages.">X</span></div>
         </div><!-- /.dt-demo-item -->
       <?php endforeach; ?>
       <div class="clear"></div>
+      <div class="dt-importer-footer">
+        <?php _e( 'One-Click Installer Brought you by <a href="https://github.com/AminulBD/dt-demo-importer">Aminul Islam</a>', 'dt-importer' ); ?>
+      </div>
     </div><!-- /.dt-demo-browser -->
   </div><!-- /.wrap -->
   <?php
   }
 
-  // Import Proccess
+  /**
+   * Import Proccess
+   */
   public function import_process() {
+    $id = $_POST['id'];
+
+    // Import XML Data
     $this->import_xml_data();
+
+    // Setup Option Data from Codestar
     $this->import_cs_options_data();
+
+    // Setup Reading
+    $this->set_pages_for_reading();
+
+    // Setup Menu
+    if (isset($this->items[$id]['menus'])) {
+      $this->set_menu();
+    }
     die();
   }
-  // Insert XML Data
+
+
+  /**
+   * Import XML data by WordPress Importer
+   */
   public function import_xml_data() {
 
     if ( ! wp_verify_nonce( $_POST['nonce'], 'dt_importer' ) )
@@ -178,6 +200,9 @@ class DT_Demo_Importer extends DT_Demo_Importer_Abstract {
 
   }
 
+  /**
+   * Update Codestar Framework Options Data
+   */
   public function import_cs_options_data() {
     $id = $_POST['id'];
     $file = DT_IMPORTER_CONTENT_DIR . $id . '/options.txt';
@@ -187,6 +212,55 @@ class DT_Demo_Importer extends DT_Demo_Importer_Abstract {
       $data = file_get_contents( $file );
       $decoded_data = cs_decode_string( $data );
       update_option( $this->framework_id, $decoded_data );
+    }
+  }
+
+  /**
+   * Set Homepage and Front page
+   */
+  public function set_pages_for_reading() {
+    $id = $_POST['id'];
+
+    // Set Home
+    if (isset($this->items[$id]['front_page'])) {
+      $page = get_page_by_title($this->items[$id]['front_page']);
+
+      if ( isset( $page->ID ) ) {
+        update_option( 'page_on_front', $page->ID );
+        update_option( 'show_on_front', 'page' );
+      }
+    }
+
+    // Set Blog
+    if (isset($this->items[$id]['blog_page'])) {
+      $page = get_page_by_title($this->items[$id]['blog_page']);
+
+      if ( isset( $page->ID ) ) {
+        update_option( 'page_for_posts', $page->ID );
+        update_option( 'show_on_front', 'page' );
+      }
+    }
+  }
+
+  /**
+   * Setup Menu
+   */
+  public function set_menu() {
+    $id = $_POST['id'];
+    
+    // Store All Menu
+    $menu_locations = array();
+
+    foreach ($this->items[$id]['menus'] as $key => $value) {
+      $menu = get_term_by( 'name', $value, 'nav_menu' );
+      if (isset($menu->term_id)) {
+        $menu_locations[$key] = $menu->term_id;
+      }
+    }
+
+    // Set Menu If has
+    if (isset($menu_locations)) {
+      set_theme_mod( 'nav_menu_locations', $menu_locations );
     }
   }
 

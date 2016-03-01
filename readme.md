@@ -7,12 +7,6 @@ A One Click Demo Installer Class for WordPress Themes. This class developed for 
 **Place this code in functions.php**
 ````
 /**
- * Load DT Importer
- */
-require_once get_template_directory() . '/dt_importer/init.php';
-
-
-/**
  * Initialize DT Importer
  */
 $settings      = array(
@@ -22,23 +16,39 @@ $settings      = array(
   'menu_slug'   => 'dt_demo_importer',
 );
 $options        = array(
-    array(
-      'id'            => 'demo-1', //folder name
+    'demo-1' => array(
       'title'         => __('Demo 1', 'dt-importer'),
       'preview_url'   => 'https://www.google.com/',
+      'front_page'    => 'Home',
+      'blog_page'     => 'Blog',
+      'menus'         => array(
+            'primary'   => 'Primary', // Menu Location and Title
+            'secondary' => 'Secondary',
+        )
     ),
-    array(
-      'id'            => 'demo-2', folder name
+    'demo-2' => array(
       'title'         => __('Demo 2', 'dt-importer'),
       'preview_url'   => 'https://www.yahoo.com/',
+      'front_page'    => 'Home',
+      'blog_page'     => 'Blog',
+      'menus'         => array(
+            'primary'   => 'Primary',
+            'secondary' => 'Secondary',
+        )
     ),
-    array(
-      'id'            => 'demo-3',
+    'demo-3' => array(
       'title'         => __('Demo 3', 'dt-importer'),
       'preview_url'   => 'https://www.google.com/',
+      'front_page'    => 'Home',
+      'blog_page'     => 'Blog',
+      'menus'         => array(
+            'primary'   => 'Primary',
+            'secondary' => 'Secondary',
+        )
     ),
 );
 DT_Demo_Importer::instance( $settings, $options );
+
 ````
 
 **Create Folder by id in ````dt_importer/demos/```` by same id**
