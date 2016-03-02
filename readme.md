@@ -68,6 +68,8 @@ demos
     - screenshot.php // Preview Image
 ````
 
+Now go to the Tools >> Demo Importer :)
+
 # Few screenshots
 ![Dashboard](http://i.imgur.com/u8oknuS.jpg)
 
