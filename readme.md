@@ -77,6 +77,8 @@ Now go to the Tools >> Demo Importer :)
 * This class only import codestar settings only and planned to support others framework (Like: redux, option tree)
 * Planned to support widget import.
 
+# create `content.xml` and `options.txt` file 
+
 # Credits
 * [Codestar](https://github.com/Codestar/codestar-framework)
 * [FrankM1](https://github.com/FrankM1/radium-one-click-demo-install)
