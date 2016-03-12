@@ -78,7 +78,7 @@ Now go to the Tools >> Demo Importer :)
 * Planned to support widget import.
 
 # create `content.xml` and `options.txt` file 
-
+You can create content.xml by exporting your content from the WordPress dashboard (Dashboard > Tools > Export) and you can options string from backup field on the codestar option panel.
 # Credits
 * [Codestar](https://github.com/Codestar/codestar-framework)
 * [FrankM1](https://github.com/FrankM1/radium-one-click-demo-install)
