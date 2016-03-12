@@ -23,7 +23,7 @@ class DT_Demo_Importer extends DT_Demo_Importer_Abstract {
    * @var string
    *
    */
-  public $framework_id = '_cs_options';
+  public $framework_id = defined( 'CS_OPTION' ) ? CS_OPTION : '_cs_options';
   /**
    *
    * demo items
