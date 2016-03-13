@@ -5,7 +5,7 @@ A One Click Demo Installer Class for WordPress Themes. This class developed for 
 # Quick Usage
 
 **Place this code in functions.php**
-````
+````php
 /**
  * Initialize DT Importer
  */
@@ -52,7 +52,7 @@ DT_Demo_Importer::instance( $settings, $options );
 ````
 
 **Create Folder by id in ````dt_importer/demos/```` by same id**
-````
+````php
 demos
   - demo-1
     - content.xml // WP Exported Data
@@ -77,6 +77,8 @@ Now go to the Tools >> Demo Importer :)
 * This class only import codestar settings only and planned to support others framework (Like: redux, option tree)
 * Planned to support widget import.
 
+# create `content.xml` and `options.txt` file 
+You can create content.xml by exporting your content from the WordPress dashboard (Dashboard > Tools > Export) and you can options string from backup field on the codestar option panel.
 # Credits
 * [Codestar](https://github.com/Codestar/codestar-framework)
 * [FrankM1](https://github.com/FrankM1/radium-one-click-demo-install)
