@@ -1,4 +1,18 @@
 <?php
+/*
+Plugin Name: softbay-companion
+Plugin URI:
+Description: Admin panel for creating custom post types and custom taxonomies in WordPress
+Author: mahedi amin
+Version: 1.0.0
+Author URI: mahediamin.com
+Text Domain: custom-post-type-ui
+Domain Path: /languages
+License: GPLv2
+*/
+
+
+
 /**
  * Importer Path
  */
